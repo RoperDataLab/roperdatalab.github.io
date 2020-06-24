@@ -1,0 +1,29 @@
+---
+title: "How we covered the pandemic's impact on traffic in Nebraska"
+author: "Matt Waite"
+date: 2020-06-15T14:27:00-05:00
+categories: ["projects"]
+tags: ["coronavirus", "data"]
+banner: "img/banners/traffic.png"
+description: "Turning data into very local stories in a pandemic."
+---
+
+In March 2020, with campus closed along with businesses statewide, the data journalism class at UNL's College of Journalism and Mass Communication started talking about how we could measure the impact of quarantine on daily life. 
+
+To measure the impact of the coronavirus on Nebraska, we looked for automated data collectors. One such automated data collector is the automated traffic counting stations that the data Department of Transportation uses.
+
+Unfortunately, most of the data cleanup for this was manual, making it hard to repeat. 
+
+* The NDOT publishes the data as a PDF, which we parsed with [Tabula](https://tabula.technology/). We spent a decent bit lining up separate sections to ensure as clean of parsing as possible.
+* Once out of Tabula, we imported the CSV into Excel, because what came next was largely copy and paste work to move it around. because 
+* After the data was lined up so it was one row, one station, we discovered another problem. There's no location identifier in the PDF that matches anything in the GIS data we found at the Nebraska Map. The only thing that matched from one file to the other was the 2019 annual traffic total. So to connect them, we took each and transferred the GIS identifier to the spreadsheet so we could join them together later.
+
+What came next is kind of fun: Each student in the class took three spots on a [Google map of the traffic counting locations](https://www.google.com/maps/d/u/0/edit?mid=1cBIbTV9fnJzfBOzbX4S3z6XbowUvx08j&ll=41.469687911144106%2C-99.773945&z=8), zoomed in on the spot and started calling businesses nearby. 
+
+We then divided the state into counties where there were counting stations, and we wrote one story for each county. Students wrote a lead based off their interviews and we wrote one middle part for each story that gave the overall view of the state. Then, at the end, we added more from student interviews to add to the stories. 
+
+News organizations around the state were then [invited](https://www.yorknewstimes.com/news/local/covid-19-effects-on-local-travel/article_d92806b8-8f50-11ea-ba1c-db6aa2b2749c.html) [to](http://www.hastingstribune.com/covid-19/pandemic-measures-mean-less-highway-traffic/article_fc16e4fe-8e5c-11ea-ad69-97427f2d56bb.html) [publish](https://www.northeastnebraskanews.us/news/covid-19-quarantine-has-really-slowed-hwy-20-traffic) [the](https://gretnaguide.com/2020/05/06/coronavirus-affects-nebraskas-roadways/) [stories](https://www.wahoo-ashland-waverly.com/waverly/news/covid-19-affects-traffic-in-lancaster-county/article_c90e6040-8fca-11ea-98bc-774f0f09c86a.html). Many more than linked here published stories in their print editions. And we also [published our data and code to GitHub](https://github.com/RoperDataLab/PandemicTraffic). 
+
+While this story came before the Roper Lab, it's an example of just what the Roper Lab is all about: Take data interesting to the state, figure out how to make it local for local news organizations and share it widely. We won't always write stories -- sometimes it might just be a map, or a graphic, or we'll create reporting materials for local organizations to do their own stories. 
+
+But for the first time, this worked well.
