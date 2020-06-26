@@ -224,7 +224,8 @@
 <p>Unfortunately, most of the data cleanup for this was manual, making it hard to repeat.</p>
 <ul>
 <li>The NDOT publishes the data as a PDF, which we parsed with <a href="https://tabula.technology/">Tabula</a>. We spent a decent bit lining up separate sections to ensure as clean of parsing as possible.</li>
-<li>Once out of Tabula, we imported the CSV into Excel, because what came next was largely copy and paste work to move it around. because</li>
+<li>Once out of Tabula, we imported the CSV into Excel, because what came next was largely copy and paste work to move it around.<br />
+</li>
 <li>After the data was lined up so it was one row, one station, we discovered another problem. There’s no location identifier in the PDF that matches anything in the GIS data we found at the Nebraska Map. The only thing that matched from one file to the other was the 2019 annual traffic total. So to connect them, we took each and transferred the GIS identifier to the spreadsheet so we could join them together later.</li>
 </ul>
 <p>What came next is kind of fun: Each student in the class took three spots on a <a href="https://www.google.com/maps/d/u/0/edit?mid=1cBIbTV9fnJzfBOzbX4S3z6XbowUvx08j&amp;ll=41.469687911144106%2C-99.773945&amp;z=8">Google map of the traffic counting locations</a>, zoomed in on the spot and started calling businesses nearby.</p>
