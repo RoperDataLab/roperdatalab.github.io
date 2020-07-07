@@ -7,16 +7,16 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <title>How we covered the pandemic&amp;rsquo;s impact on traffic in Nebraska</title>
+  <title>Making locally relevant stories using PPP loans and scripting</title>
   <meta name="author" content="Matt Waite" />
   
   
   
   
-  <meta name="keywords" content="nebraska, news, data, journalism, coronavirus">
+  <meta name="keywords" content="nebraska, news, data, journalism, coronavirus, automation">
   
   
-  <meta name="description" content="Turning data into very local stories in a pandemic.">
+  <meta name="description" content="How we used R, the tidyverse and PPP Loan data to make locally relevant stories for 252 communities">
 
   <meta name="generator" content="Hugo 0.72.0" />
 
@@ -66,40 +66,40 @@
   
   <meta property="og:locale" content="en_us">
   <meta property="og:site_name" content="Roper Lab for Data in Community News">
-  <meta property="og:title" content="How we covered the pandemic&amp;rsquo;s impact on traffic in Nebraska">
+  <meta property="og:title" content="Making locally relevant stories using PPP loans and scripting">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://roperdatalab.github.io/blog/2020/06/15/how-we-covered-coronavirus-traffic/" />
-  <meta property="og:description" content="Turning data into very local stories in a pandemic.">
-  <meta property="og:image" content="https://roperdatalab.github.io/img/banners/traffic.png">
+  <meta property="og:url" content="https://roperdatalab.github.io/blog/2020/07/07/automating-ppp-stories/" />
+  <meta property="og:description" content="How we used R, the tidyverse and PPP Loan data to make locally relevant stories for 252 communities">
+  <meta property="og:image" content="https://roperdatalab.github.io/img/banners/generic.png">
   <meta property="og:image:type" content="image/png">
   
   
   
-    <meta property="og:image:width" content="1159">
-    <meta property="og:image:height" content="838">
+    <meta property="og:image:width" content="1613">
+    <meta property="og:image:height" content="978">
   
   
-  <meta property="og:updated_time" content="2020-06-15T14:27:00-0500">
+  <meta property="og:updated_time" content="2020-07-07T12:27:00-0500">
   
     
     
     <meta property="article:section" content="projects">
     <meta property="article:tag" content="coronavirus">
-    <meta property="article:tag" content="data">
+    <meta property="article:tag" content="automation">
     
     
-    <meta property="article:published_time" content="2020-06-15T14:27:00-0500">
-    <meta property="article:modified_time" content="2020-06-15T14:27:00-0500">
+    <meta property="article:published_time" content="2020-07-07T12:27:00-0500">
+    <meta property="article:modified_time" content="2020-07-07T12:27:00-0500">
   
 
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@nenewsservice">
-  <meta name="twitter:title" content="How we covered the pandemic&amp;rsquo;s impact on traffic in Nebraska">
+  <meta name="twitter:title" content="Making locally relevant stories using PPP loans and scripting">
   
-  <meta name="twitter:image" content="https://roperdatalab.github.io/img/banners/traffic.png">
+  <meta name="twitter:image" content="https://roperdatalab.github.io/img/banners/generic.png">
   
-  <meta name="twitter:description" content="Turning data into very local stories in a pandemic.">
+  <meta name="twitter:description" content="How we used R, the tidyverse and PPP Loan data to make locally relevant stories for 252 communities">
   
 
 </head>
@@ -118,9 +118,9 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand home" href="/">
-                    <img src="/img/logo.png" alt="How we covered the pandemic&#39;s impact on traffic in Nebraska logo" class="hidden-xs hidden-sm">
-                    <img src="/img/logo-small.png" alt="How we covered the pandemic&#39;s impact on traffic in Nebraska logo" class="visible-xs visible-sm">
-                    <span class="sr-only">How we covered the pandemic&#39;s impact on traffic in Nebraska - go to homepage</span>
+                    <img src="/img/logo.png" alt="Making locally relevant stories using PPP loans and scripting logo" class="hidden-xs hidden-sm">
+                    <img src="/img/logo-small.png" alt="Making locally relevant stories using PPP loans and scripting logo" class="visible-xs visible-sm">
+                    <span class="sr-only">Making locally relevant stories using PPP loans and scripting - go to homepage</span>
                 </a>
                 <div class="navbar-buttons">
                     <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
@@ -191,7 +191,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>How we covered the pandemic&#39;s impact on traffic in Nebraska</h1>
+                <h1>Making locally relevant stories using PPP loans and scripting</h1>
             </div>
         </div>
     </div>
@@ -211,7 +211,7 @@
                           <p class="text-muted text-uppercase mb-small text-right">
                             By <a href="#">Matt Waite</a>
                              | 
-                            June 15, 2020
+                            July 7, 2020
                           </p>
                         
 
@@ -219,20 +219,30 @@
                           
 
 
-<p>In March 2020, with campus closed along with businesses statewide, the data journalism class at UNL’s College of Journalism and Mass Communication started talking about how we could measure the impact of quarantine on daily life.</p>
-<p>To measure the impact of the coronavirus on Nebraska, we looked for automated data collectors. One such automated data collector is the automated traffic counting stations that the data Department of Transportation uses.</p>
-<p>Unfortunately, most of the data cleanup for this was manual, making it hard to repeat.</p>
-<ul>
-<li>The NDOT publishes the data as a PDF, which we parsed with <a href="https://tabula.technology/">Tabula</a>. We spent a decent bit lining up separate sections to ensure as clean of parsing as possible.</li>
-<li>Once out of Tabula, we imported the CSV into Excel, because what came next was largely copy and paste work to move it around.<br />
-</li>
-<li>After the data was lined up so it was one row, one station, we discovered another problem. There’s no location identifier in the PDF that matches anything in the GIS data we found at the Nebraska Map. The only thing that matched from one file to the other was the 2019 annual traffic total. So to connect them, we took each and transferred the GIS identifier to the spreadsheet so we could join them together later.</li>
-</ul>
-<p>What came next is kind of fun: Each student in the class took three spots on a <a href="https://www.google.com/maps/d/u/0/edit?mid=1cBIbTV9fnJzfBOzbX4S3z6XbowUvx08j&amp;ll=41.469687911144106%2C-99.773945&amp;z=8">Google map of the traffic counting locations</a>, zoomed in on the spot and started calling businesses nearby.</p>
-<p>We then divided the state into counties where there were counting stations, and we wrote one story for each county. Students wrote a lead based off their interviews and we wrote one middle part for each story that gave the overall view of the state. Then, at the end, we added more from student interviews to add to the stories.</p>
-<p>News organizations around the state were then <a href="https://www.yorknewstimes.com/news/local/covid-19-effects-on-local-travel/article_d92806b8-8f50-11ea-ba1c-db6aa2b2749c.html">invited</a> <a href="http://www.hastingstribune.com/covid-19/pandemic-measures-mean-less-highway-traffic/article_fc16e4fe-8e5c-11ea-ad69-97427f2d56bb.html">to</a> <a href="https://www.northeastnebraskanews.us/news/covid-19-quarantine-has-really-slowed-hwy-20-traffic">publish</a> <a href="https://gretnaguide.com/2020/05/06/coronavirus-affects-nebraskas-roadways/">the</a> <a href="https://www.wahoo-ashland-waverly.com/waverly/news/covid-19-affects-traffic-in-lancaster-county/article_c90e6040-8fca-11ea-98bc-774f0f09c86a.html">stories</a>. Many more than linked here published stories in their print editions. And we also <a href="https://github.com/RoperDataLab/PandemicTraffic">published our data and code to GitHub</a>.</p>
-<p>While this story came before the Roper Lab, it’s an example of just what the Roper Lab is all about: Take data interesting to the state, figure out how to make it local for local news organizations and share it widely. We won’t always write stories – sometimes it might just be a map, or a graphic, or we’ll create reporting materials for local organizations to do their own stories.</p>
-<p>But for the first time, this worked well.</p>
+<p>On Monday, the Small Business Administration released the names of some 650,000 Paycheck Protection Program loans given to businesses during the pandemic. Big news organizations went into action, <a href="https://www.propublica.org/article/trump-friends-and-family-cleared-for-millions-in-small-business-bailout">finding the politcally connected who got loans</a>, <a href="https://apnews.com/8798e58a0ddc490ad549329b343e551c">interesting businesses who got them</a> and <a href="https://www.reuters.com/article/us-health-coronavirus-ppp-ayn-rand/in-sign-of-the-times-ayn-rand-institute-approved-for-ppp-loan-idUSKBN248026">even some irony in the data</a>.</p>
+<p>But for very small organizations, who don’t have data desks and investigative units, the data wasn’t particularly useful. For small town newspapers, local companies getting PPP loans is an interesting story, but most of them lack the resources to go diving into a 127 MB spreadsheet.</p>
+<p>This is the kind of story the Roper Lab for Data in Community News was created for. We can be the data desk for those who don’t have one.</p>
+<p>What we did in this case was take the data and create 253 stories, one for each town that had a company that got a loan. We used the data to write a locally relevant headline and top to the story, six paragraphs of context, and then for each town, we included a list of companies who got loans and what range of loan they got (the SBA did not report exact figures).</p>
+<p>The main clients of the Roper Data Lab are members of the <a href="https://nebraskanewsservice.net/">Nebraska News Service</a> at the University of Nebraska-Lincoln’s College of Journalism and Mass Communications. More than 100 news organizations in the state, from small town newspapers to community radio stations to local television, receive News Service stories for free via email. They can range from tiny organizations with just a few employees to daily newspapers in some of the larger towns in the state.</p>
+<p>So our target was to get locally relevant stories into their hands. To do this, we used R to clean up the data, query interesting information about Nebraska companies, and then write unique stories for each city where a company that got a loan is based. At the end of each story is a list of companies in that town who got a loan.</p>
+<p>The code also converts numbers into AP Style, switches pluralization of business and changes the verb is/are where needed automatically to create clean copy. It also conditionally adds context when companies don’t report the number of jobs they believed they would retain with the money.</p>
+<p>In all, our code wrote 253 stories, but there’s dozens of variations of the story within those 253. Here’s an example from my hometown of Blair, Nebraska.</p>
+<blockquote>
+<p>SBA: 35 Blair businesses got pandemic loans</p>
+<p>The Small Business Administration on Monday released some details about 4,179 Nebraska businesses that took out Paycheck Protection Program loans of $150,000 or more.</p>
+<p>Of them, 35 are from Blair and the businesses planned in their loan paperwork to preserve 1,386 jobs with that money. However, three did not report information about jobs preserved with the loan.</p>
+<p>The data released by the Small Business Administration on Monday is only a small slice of all Paycheck Protection loans issued during the pandemic. The government revealed details of 650,000 loans on Monday. In all, more than 5 million loans were granted under the program.</p>
+<p>The loans are low-interest loans that can be forgiven if the company uses the money to retain employees. Companies are just now beginning the loan forgiveness process.</p>
+<p>Statewide, Omaha had the most loans at 1,598, which represented 38 percent of all loans given to Nebraska businesses. Lincoln (672), Grand Island, (147), Kearney (116) and Norfolk (89) rounded out the top 5.</p>
+<p>The Small Business Administration did not report the exact amount each business took out in loans, offering a range that the loan fell into. Only loans of $150,000 or more were reported.</p>
+<p>Of the 4,179 loans, 2,394 of them were for the lowest range, $150,000 to $350,000. Statewide, 36 businesses got loans of $5 million to $10 million.</p>
+<p>Among those top loan amount recipients are variety of businesses, mostly based in eastern Nebraska. Several are medical companies, such as the Kearney Regional Medical Center and the Nebraska Orthopaedic Hospital in Omaha. Rotella’s Italian Bakery claimed to have retained 466 jobs with their upper range loan. Several agriculture industry businesses also topped the list.</p>
+<p>Sixteen business reported that they would retain 500 jobs with their loans, the highest amount disclosed by federal regulators.</p>
+<p>The average number of jobs preserved by companies who reported that number is 51. However, 106 Nebraska companies said they retained zero workers with the loan. Another 644 left the question blank on their application.</p>
+</blockquote>
+<p>The list of companies include my dentist growing up, the town mortuary, the elderly care home my grandmother lived in before she passed, the company that will replace the roof on my house soon, the two big car dealers in town and … the local newspaper.</p>
+<p>Those stories were sent to news service clients in a Box folder, where they could find a story named for each town. As of this writing, we don’t know how many will use the stories – weekly and twice weekly publication schedules and all.</p>
+<p>Our code, like every story we do in the Roper Lab, <a href="https://github.com/RoperDataLab/PPPloans">is public and online</a>. You can see what we did yourself.</p>
 
                         </div>
                         
