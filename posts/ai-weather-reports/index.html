@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.247">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Matt Waite">
+<meta name="dcterms.date" content="2023-09-13">
+<meta name="description" content="Can ChatGPT, Bard or Llama-2 write short weather reports based on automated feeds from airport weather stations? Kind of.">
+
+<title>Roper Lab for Data in Community News - Prompting AI to write short weather reports</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Roper Lab for Data in Community News</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/RoperDataLab"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Prompting AI to write short weather reports</h1>
+                  <div>
+        <div class="description">
+          Can ChatGPT, Bard or Llama-2 write short weather reports based on automated feeds from airport weather stations? Kind of.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">news</div>
+                <div class="quarto-category">ai</div>
+                <div class="quarto-category">weather</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Matt Waite </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 13, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>One of the most basic – and banal - forms of news is the weather. A quick look at current conditions and a peek ahead at the forecast is something many people do repeatedly throughout the day. It’s one of the most common functions of voice assistants – “Okay Google, what’s the weather outside right now?” So how can we take a feed of weather information – in this case, an automated weather report from every airport in the country – and turn it into a conversational weather report that we can use on social or other places.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Platforms: ChatGPT 3.5, ChatGPT 4.0, Bard, and Llama-2</p>
+<p>Data source: NOAA’s https://aviationweather.gov/</p>
+<p>Goal: Casual weather report</p>
+</div>
+</div>
+<section id="the-prompt" class="level3">
+<h3 class="anchored" data-anchor-id="the-prompt">The prompt</h3>
+<p>The challenge with this getting an LLM to use human language and common measurements. Given the information it has, it will use barometric pressure readings and metric units. The work here is in setting up the prompt. After trial and error, this is the prompt that ultimately worked for one LLM.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Prompt
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are the weather reporter for a local news organization. Your job is to produce a three-sentence weather report using data from a NOAA Aviation Weather Report. You are not reporting weather for aviators.</p>
+<p>Your report must obey the following rules.</p>
+<ol type="1">
+<li>Do not report the airport name. Report the city the airport is in.</li>
+<li>Convert all metric measurements to imperial.</li>
+<li>The temperature readings given are in Celsius. Convert them to Fahrenheit.</li>
+<li>Convert all times and dates to Central US Time.</li>
+<li>Convert all wind speeds to miles per hour. Do not use knots.</li>
+<li>Do not report barometric pressure readings.</li>
+<li>Do not report altimeter settings.</li>
+<li>You do not need to report the state.</li>
+<li>You do not need to report the F to indicate Fahrenheit.</li>
+<li>The first sentence is about the current weather.</li>
+<li>The next two sentences are about the forecasted weather.</li>
+<li>Do not report the cloud ceilings.</li>
+<li>If three sentences of accurate weather information is not possible, write two.</li>
+<li>Only use information from the weather report to write your sentences.</li>
+</ol>
+<p>Here is the weather information you have to use:</p>
+<p>Current weather conditions: KLNK 131554Z VRB04KT 10SM OVC085 22/11 A3013 RMK AO2 SLP196 T02220106</p>
+<p>Forecasted weather conditions: KLNK 131459Z 1315/1412 20005KT P6SM OVC080</p>
+</div>
+</div>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>The basic facts of the weather report are that it’s about 72 degrees with variable winds at about 5 mph and overcast skies. The forecast is for more of the same, with winds out of the southwest at about 6 mph.</p>
+<p>The results of testing this were varied. In spite of specific instructions to the contrary, ChatGPT 3.5 conflated Celsius and Fahrenheit, used terms it was told not to, and insisted that the forecast included temperature information when it did not. Other times, it invented a forecast of rain.</p>
+<p>Examples:</p>
+<blockquote class="blockquote">
+<p>In Lincoln, the current weather features overcast skies with a temperature of 22°F and a light variable wind at 4 mph. Over the next 24 hours, expect the conditions to remain mostly cloudy with a slight warming trend, reaching a high of around 80°F in the afternoon, and a steady wind from the south-southwest at 5 mph.</p>
+</blockquote>
+<p>The temperature at the time was 22 degrees Celsius, not Fahrenheit. It should have been 72 degrees. The wind report was correct. As was the wind report in the forecast. However, nowhere in the forecast is there information about a warming trend.</p>
+<blockquote class="blockquote">
+<p>Currently, in Lincoln, the temperature is 22°F with overcast skies, and the wind is variable at 4 mph. For the forecast, expect overcast conditions with a high of 22°F and a low of 11°F, while the wind will continue to be light, around 5 mph, throughout the day.</p>
+</blockquote>
+<p>With another edit to the prompt, I added text that specifically listed the current weather conditions were the first line and the second line contained the forecast conditions. That addition improved the prompt considerably, with one major problem.</p>
+<blockquote class="blockquote">
+<p>Currently in Lincoln, the weather is overcast with a temperature of 72°F and a light variable wind at 4 mph. For the forecast, expect overcast conditions to continue with a high of 80°F and a light southerly wind at 5 mph through the day, and the possibility of some showers overnight.</p>
+</blockquote>
+<p>The problem: Nowhere in the forecast is any mention of rain.</p>
+</section>
+<section id="other-models" class="level3">
+<h3 class="anchored" data-anchor-id="other-models">Other models</h3>
+<p>Bard, as it is wont to do, turned the report in to bullet points.</p>
+<blockquote class="blockquote">
+<p>Sure, here is the three-sentence weather report for Lincoln, Nebraska, as of 15:27 CDT on September 13, 2023:</p>
+<ul>
+<li><p>The current weather in Lincoln is mostly cloudy with a temperature of 72 degrees Fahrenheit and winds of 4 miles per hour.</p></li>
+<li><p>The sky will remain mostly cloudy throughout the afternoon, with winds increasing to 10 miles per hour.</p></li>
+<li><p>The temperature will drop to 60 degrees Fahrenheit overnight.</p></li>
+</ul>
+<p>Here is the two-sentence weather report:</p>
+<ul>
+<li><p>Mostly cloudy skies with a temperature of 72 degrees Fahrenheit and winds of 4 miles per hour.</p></li>
+<li><p>Winds will increase to 10 miles per hour in the afternoon.</p></li>
+</ul>
+<p>I hope this is helpful!</p>
+</blockquote>
+<p>There is nothing in the forecast about winds increasing to 10 mph during the afternoon, nor anything about a temperature drop overnight.</p>
+<p>Llama-2-7b via gpt4all was a complete mess.</p>
+<blockquote class="blockquote">
+<p>Sure, I’d be happy to help! Here is the three-sentence weather report based on the provided data:</p>
+<p>Currently (at 1315 UTC), the airport in Kansas City is experiencing mostly cloudy skies with a temperature of 22°F (-6°C) and a wind speed of 4 knots. The barometric pressure is 30.13 inches of mercury, and the altimeter setting is 29.97 inches.</p>
+<p>For tomorrow (at 1315 UTC), there is a forecasted chance of light snow showers with a high temperature of 34°F (1°C) and a low temperature of 20°F (-7°C). The wind speed will be around 6 knots, and the barometric pressure will remain steady at 30.13 inches of mercury.</p>
+<p>I hope this helps! Let me know if you have any other questions.</p>
+</blockquote>
+<p>Llama-2 clearly has some training data that parses those weather reports. But it ignored all the rules given to it and Lincoln is very much not Kansas City.</p>
+</section>
+<section id="further-testing" class="level3">
+<h3 class="anchored" data-anchor-id="further-testing">Further testing</h3>
+<p>To test the prompt, I used weather reports from other airports to test it. For example, this is the report from Chicago’s Midway Airport.</p>
+<blockquote class="blockquote">
+<p>In Chicago (Midway Airport), it’s currently partly cloudy with a temperature of 70°F and a north-northeast wind at 8 mph. The forecast calls for mostly clear skies through the day with a high around 68°F and a light north-northeast wind at 4 mph. Expect some cloud cover to increase in the late afternoon and evening, with a chance of light rain showers overnight as the wind shifts to the northeast at 6 mph.</p>
+</blockquote>
+<p>The bulk of the report is correct, but yet again, the forecast doesn’t call for rain in spite of this report.</p>
+</section>
+<section id="a-working-version" class="level3">
+<h3 class="anchored" data-anchor-id="a-working-version">A working version</h3>
+<p>ChatGPT 4.0 is the only LLM tried that worked. It obeyed the rules, converted the units correctly and didn’t invent any weather not in the report.</p>
+<blockquote class="blockquote">
+<p>The current weather in Lincoln is mostly cloudy with a temperature of 72°F and light variable winds at around 5 mph. The forecast for today shows overcast skies with winds coming from the south at about 6 mph. This weather condition is expected to last until tomorrow morning.</p>
+</blockquote>
+</section>
+<section id="a-more-difficult-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-more-difficult-example">A more difficult example</h3>
+<p>This weather report from Boston is more complex than the previous two, in that it actually includes rain.</p>
+<blockquote class="blockquote">
+<p>Current weather: KBOS 131810Z 21010KT 3SM RA BR FEW009 SCT026 OVC080 23/20 A2993 RMK AO2 VIS E-SE 2 P0008 T02280200`</p>
+<p>Forecast: KBOS 131733Z 1318/1424 14004KT P6SM -SHRA BKN070 BKN100 OVC140 &nbsp;&nbsp;TEMPO 1318/1320 2SM TSRA BR BKN020CB OVC060 &nbsp;&nbsp;FM132200 18006KT 5SM -SHRA BR VCTS OVC060CB &nbsp;&nbsp;FM140000 18006KT 5SM -SHRA BR OVC070 &nbsp;&nbsp;FM140400 25004KT 5SM BR OVC035 &nbsp;&nbsp;FM140800 29005KT 6SM BR BKN100</p>
+</blockquote>
+<p>At the time of this report, it was raining and misting in Boston. The forecast called for more light rain, thunderstorms and light showers giving over to mist later with the wind changing directions. Here’s how ChatGPT 4.0 handled it.</p>
+<blockquote class="blockquote">
+<p>The current weather in Boston is rainy with a visibility of 3 miles, temperatures at 72°F, and winds from the southwest at 11 mph. Today’s forecast indicates light rain showers with occasional thunderstorms and reduced visibility down to 2 miles, coupled with an overcast sky. This evening, expect light rain showers, misty conditions, and overcast skies that will persist into tomorrow morning, with winds gradually shifting from the south to the west.</p>
+</blockquote>
+<p>Spot on.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>It’s clear ChatGPT 3.5, Bard and Llama-2 all have some understanding of aviation weather reports and is able to parse some of the data. It is also clear that it has limited understanding of what is Celsius and what is Fahrenheit and will conflate the two. Several of them struggle with adding weather that is not there. At this time, it appears ChatGPT 4.0 is the only LLM that does this as envisioned here.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

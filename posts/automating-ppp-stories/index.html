@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.247">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Matt Waite">
+<meta name="dcterms.date" content="2020-07-07">
+<meta name="description" content="How we used R, the tidyverse and PPP Loan data to make locally relevant stories for 252 communities.">
+
+<title>Roper Lab for Data in Community News - Making locally relevant stories using PPP loans and scripting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Roper Lab for Data in Community News</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/RoperDataLab"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Making locally relevant stories using PPP loans and scripting</h1>
+                  <div>
+        <div class="description">
+          How we used R, the tidyverse and PPP Loan data to make locally relevant stories for 252 communities.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">projects</div>
+                <div class="quarto-category">coronavirus</div>
+                <div class="quarto-category">automation</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Matt Waite </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 7, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>On Monday, the Small Business Administration released the names of some 650,000 Paycheck Protection Program loans given to businesses during the pandemic. Big news organizations went into action, <a href="https://www.propublica.org/article/trump-friends-and-family-cleared-for-millions-in-small-business-bailout">finding the politcally connected who got loans</a>, <a href="https://apnews.com/8798e58a0ddc490ad549329b343e551c">interesting businesses who got them</a> and <a href="https://www.reuters.com/article/us-health-coronavirus-ppp-ayn-rand/in-sign-of-the-times-ayn-rand-institute-approved-for-ppp-loan-idUSKBN248026">even some irony in the data</a>.</p>
+<p>But for very small organizations, who don’t have data desks and investigative units, the data wasn’t particularly useful. For small town newspapers, local companies getting PPP loans is an interesting story, but most of them lack the resources to go diving into a 127 MB spreadsheet.</p>
+<p>This is the kind of story the Roper Lab for Data in Community News was created for. We can be the data desk for those who don’t have one.</p>
+<p>What we did in this case was take the data and create 253 stories, one for each town that had a company that got a loan. We used the data to write a locally relevant headline and top to the story, six paragraphs of context, and then for each town, we included a list of companies who got loans and what range of loan they got (the SBA did not report exact figures).</p>
+<p>The main clients of the Roper Data Lab are members of the <a href="https://nebraskanewsservice.net/">Nebraska News Service</a> at the University of Nebraska-Lincoln’s College of Journalism and Mass Communications. More than 100 news organizations in the state, from small town newspapers to community radio stations to local television, receive News Service stories for free via email. They can range from tiny organizations with just a few employees to daily newspapers in some of the larger towns in the state.</p>
+<p>So our target was to get locally relevant stories into their hands. To do this, we used R to clean up the data, query interesting information about Nebraska companies, and then write unique stories for each city where a company that got a loan is based. At the end of each story is a list of companies in that town who got a loan.</p>
+<p>The code also converts numbers into AP Style, switches pluralization of business and changes the verb is/are where needed automatically to create clean copy. It also conditionally adds context when companies don’t report the number of jobs they believed they would retain with the money.</p>
+<p>In all, our code wrote 253 stories, but there’s dozens of variations of the story within those 253. Here’s an example from my hometown of Blair, Nebraska.</p>
+<blockquote class="blockquote">
+<p>SBA: 35 Blair businesses got pandemic loans</p>
+<p>The Small Business Administration on Monday released some details about 4,179 Nebraska businesses that took out Paycheck Protection Program loans of $150,000 or more.</p>
+<p>Of them, 35 are from Blair and the businesses planned in their loan paperwork to preserve 1,386 jobs with that money. However, three did not report information about jobs preserved with the loan.</p>
+<p>The data released by the Small Business Administration on Monday is only a small slice of all Paycheck Protection loans issued during the pandemic. The government revealed details of 650,000 loans on Monday. In all, more than 5 million loans were granted under the program.</p>
+<p>The loans are low-interest loans that can be forgiven if the company uses the money to retain employees. Companies are just now beginning the loan forgiveness process.</p>
+<p>Statewide, Omaha had the most loans at 1,598, which represented 38 percent of all loans given to Nebraska businesses. Lincoln (672), Grand Island, (147), Kearney (116) and Norfolk (89) rounded out the top 5.</p>
+<p>The Small Business Administration did not report the exact amount each business took out in loans, offering a range that the loan fell into. Only loans of $150,000 or more were reported.</p>
+<p>Of the 4,179 loans, 2,394 of them were for the lowest range, $150,000 to $350,000. Statewide, 36 businesses got loans of $5 million to $10 million.</p>
+<p>Among those top loan amount recipients are variety of businesses, mostly based in eastern Nebraska. Several are medical companies, such as the Kearney Regional Medical Center and the Nebraska Orthopaedic Hospital in Omaha. Rotella’s Italian Bakery claimed to have retained 466 jobs with their upper range loan. Several agriculture industry businesses also topped the list.</p>
+<p>Sixteen business reported that they would retain 500 jobs with their loans, the highest amount disclosed by federal regulators.</p>
+<p>The average number of jobs preserved by companies who reported that number is 51. However, 106 Nebraska companies said they retained zero workers with the loan. Another 644 left the question blank on their application.</p>
+</blockquote>
+<p>The list of companies include my dentist growing up, the town mortuary, the elderly care home my grandmother lived in before she passed, the company that will replace the roof on my house soon, the two big car dealers in town and … the local newspaper.</p>
+<p>Those stories were sent to news service clients in a Box folder, where they could find a story named for each town. As of this writing, we don’t know how many will use the stories – weekly and twice weekly publication schedules and all.</p>
+<p>Our code, like every story we do in the Roper Lab, <a href="https://github.com/RoperDataLab/PPPloans">is public and online</a>. You can see what we did yourself.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
